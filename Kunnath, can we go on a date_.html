@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kunnath, can we go on a date?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#ffb8cf;--rose:#e0175f;--ink:#6b1840;--cream:#fff3e0;--night:#1b0f2e;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html,body{height:100%;margin:0}
+body{background:var(--pink);color:var(--ink);font-family:'Baloo 2',system-ui,sans-serif;transition:background .8s,color .8s;overflow-x:hidden}
+body.night{background:var(--night);color:#fff3d6}
+section{display:none;min-height:100%;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px 22px;max-width:520px;margin:0 auto}
+section.on{display:flex}
+h1{font-size:clamp(1.9rem,8.5vw,2.8rem);line-height:1.15;margin:8px 0 6px;font-weight:700}
+p{margin:0;font-size:1.1rem}
+button{font:700 1.15rem 'Baloo 2',system-ui,sans-serif;border:0;border-radius:999px;cursor:pointer;max-width:100%}
+button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.face{width:min(52vw,210px);animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px) rotate(-2deg)}}
+.btns{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:center;margin-top:22px;width:100%}
+#yes{background:var(--rose);color:#fff;padding:.5em 1.5em;font-size:1.15rem;box-shadow:0 6px 0 #a50f45;transition:font-size .25s}
+#yes.full{width:100%}
+#no{background:#fff;color:var(--rose);border:2px solid var(--rose);padding:.45em 1.4em;transition:font-size .25s,opacity .25s}
+#h1,#h2{min-height:1.6em;margin-top:14px;font-weight:600}
+.cards{display:flex;flex-direction:column;gap:14px;width:100%;margin-top:16px}
+.card{background:#fff;color:var(--ink);padding:0;overflow:hidden;border-radius:22px;box-shadow:0 6px 0 #e58aa9}
+.pic{height:calc(90px*var(--s,1));transition:height .4s}
+.pic svg{width:100%;height:100%;display:block}
+.card span{display:block;padding:8px 0 10px;font-size:1.3rem}
+#pal{width:100%;border-radius:22px;overflow:hidden;margin:18px 0;box-shadow:0 0 40px rgba(255,211,107,.35)}
+#pal svg{display:block;width:100%;height:auto}
+.l circle{fill:#ffd36b;filter:drop-shadow(0 0 3px #ffd36b);opacity:0;animation:on .5s forwards}
+@keyframes on{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.face{animation:none}.l circle{animation-duration:.01s;animation-delay:0s!important}}
+</style>
+</head>
+<body>
+<section id="p1" class="on">
+  <svg class="face" viewBox="0 0 200 200" role="img" aria-label="Cute pleading face">
+    <circle cx="100" cy="104" r="84" fill="#fff3e0"/>
+    <circle cx="52" cy="124" r="14" fill="#ff8fb3" opacity=".7"/><circle cx="148" cy="124" r="14" fill="#ff8fb3" opacity=".7"/>
+    <path d="M52 66q16-12 32-4M148 66q-16-12-32-4" stroke="#6b1840" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <ellipse cx="68" cy="100" rx="22" ry="26" fill="#2a1030"/><ellipse cx="132" cy="100" rx="22" ry="26" fill="#2a1030"/>
+    <circle cx="60" cy="90" r="9" fill="#fff"/><circle cx="124" cy="90" r="9" fill="#fff"/>
+    <circle cx="78" cy="112" r="4.5" fill="#fff"/><circle cx="142" cy="112" r="4.5" fill="#fff"/>
+    <path d="M88 142q12-8 24 0" stroke="#6b1840" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <path d="M44 118q-5 10 0 16q5-6 0-16z" fill="#7cc8ff"/>
+  </svg>
+  <h1>Kunnath, can we go on a date?</h1>
+  <p>Pretty please?</p>
+  <div class="btns"><button id="yes">Yes</button><button id="no">No</button></div>
+  <p id="h1"></p>
+</section>
+
+<section id="p2">
+  <h1>Where should we go?</h1>
+  <p>Pick one, Kunnath.</p>
+  <div class="cards">
+    <button class="card" id="tvm"><div class="pic" id="pt"></div><span>Trivandrum</span></button>
+    <button class="card" id="mys"><div class="pic" id="pm"></div><span>Mysore</span></button>
+  </div>
+  <p id="h2"></p>
+</section>
+
+<section id="p3">
+  <h1>Yay!! It's a date! 🎉</h1>
+  <p>Mysore, here we come, Kunnath 💖</p>
+  <div id="pal"></div>
+  <p>The palace lights are on for us ✨</p>
+</section>
+
+<script>
+var NS='xmlns="http://www.w3.org/2000/svg"';
+function dome(cx,by,w,h){return 'M'+(cx-w/2)+' '+by+'Q'+cx+' '+(by-2*h)+' '+(cx+w/2)+' '+by+'Z'}
+function qpt(cx,by,w,h,t){var x0=cx-w/2,x1=cx+w/2,u=1-t;return [u*u*x0+2*u*t*cx+t*t*x1,u*u*by+2*u*t*(by-2*h)+t*t*by]}
+function palace(lit){
+  var sky=lit?'#1b0f2e':'#bfe6ff',wall=lit?'#ecca8a':'#f8e6bf',win=lit?'#ffcf5a':'#b98a52',g=lit?'#2a1544':'#86c472';
+  var s='<svg viewBox="0 0 300 170" preserveAspectRatio="xMidYMid slice" '+NS+'><rect width="300" height="170" fill="'+sky+'"/>';
+  if(lit){[[30,20],[80,40],[200,15],[270,35],[240,60],[15,70]].forEach(function(p){s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="1.5" fill="#fff"/>'})}
+  else s+='<circle cx="252" cy="32" r="16" fill="#ffe28a"/>';
+  s+='<rect x="40" y="100" width="220" height="50" fill="'+wall+'"/><rect x="125" y="60" width="50" height="40" fill="'+wall+'"/>';
+  s+='<rect x="48" y="78" width="32" height="22" fill="'+wall+'"/><rect x="220" y="78" width="32" height="22" fill="'+wall+'"/>';
+  var D=[[150,60,50,28],[64,78,32,14],[236,78,32,14],[105,100,20,9],[195,100,20,9]];
+  D.forEach(function(d){s+='<path d="'+dome.apply(0,d)+'" fill="#d9a441"/>'});
+  s+='<path d="M150 32v-12" stroke="#d9a441" stroke-width="2"/>';
+  for(var i=0;i<7;i++){var x=52+i*30;s+='<path d="M'+x+' 148v-18q8-14 16 0v18z" fill="'+win+'"/>'}
+  s+='<rect y="150" width="300" height="20" fill="'+g+'"/>';
+  if(lit){var n=0,b='';
+    function dot(x,y){b+='<circle cx="'+x+'" cy="'+y+'" r="2.2" style="animation-delay:'+(n++*22)+'ms"/>'}
+    for(var x=40;x<=260;x+=8){dot(x,100);dot(x,150)}
+    D.forEach(function(d){for(var t=0;t<=1.01;t+=1/6){var p=qpt(d[0],d[1],d[2],d[3],t);dot(p[0].toFixed(1),p[1].toFixed(1))}});
+    s+='<g class="l">'+b+'</g>'}
+  return s+'</svg>'}
+function trivandrum(){
+  var s='<svg viewBox="0 0 300 170" preserveAspectRatio="xMidYMid slice" '+NS+'><rect width="300" height="170" fill="#ffd9a8"/><circle cx="60" cy="40" r="18" fill="#fff3c4"/>';
+  s+='<rect y="132" width="300" height="38" fill="#4aa3c7"/><rect y="146" width="300" height="24" fill="#f3d9a4"/>';
+  [[90,16,56],[74,16,72],[58,16,88],[42,16,104],[26,14,120]].forEach(function(r,i){s+='<rect x="'+(150-r[0]/2)+'" y="'+(r[2]+8)+'" width="'+r[0]+'" height="'+r[1]+'" fill="'+(i%2?'#b87345':'#c98b5a')+'"/>'});
+  s+='<rect x="105" y="136" width="90" height="12" fill="#c98b5a"/><path d="M142 148v-14q8-12 16 0v14z" fill="#4a2a14"/>';
+  s+='<circle cx="150" cy="52" r="4" fill="#e8b84a"/><path d="M150 48v-8" stroke="#e8b84a" stroke-width="2"/>';
+  [[40,0],[262,0]].forEach(function(p){s+='<path d="M'+p[0]+' 150q-4-40 4-60" stroke="#6b4a2a" stroke-width="4" fill="none"/><path d="M'+(p[0]+4)+' 90q-22-6-30 8M'+(p[0]+4)+' 90q22-6 30 8M'+(p[0]+4)+' 90q-6-20-22-22M'+(p[0]+4)+' 90q6-20 22-22" stroke="#3f8f4a" stroke-width="4" fill="none" stroke-linecap="round"/>'});
+  return s+'</svg>'}
+var $=function(i){return document.getElementById(i)};
+function go(id){document.querySelectorAll('section').forEach(function(e){e.classList.remove('on')});$(id).classList.add('on');window.scrollTo(0,0)}
+$('pt').innerHTML=trivandrum();$('pm').innerHTML=palace(false);
+
+var no=0,msgs=["Please say yes 🥺","Pretty please say yes 🥺👉👈","I'll buy you Mysore Pak 🥹","Please please please say yes 😭","Just press the big Yes, Kunnath 💖"];
+$('no').addEventListener('click',function(){
+  no++;var y=$('yes'),f=1.15+no*.35;
+  if(f>2.4){y.classList.add('full');f=2.4}
+  y.style.fontSize=f+'rem';
+  $('no').style.fontSize=Math.max(.6,1.15*Math.pow(.88,no))+'rem';
+  $('h1').textContent=msgs[Math.min(no-1,msgs.length-1)]});
+$('yes').addEventListener('click',function(){go('p2')});
+
+var tv=0,tm=["Mysore is looking bigger, no? 👀","Mysore is growing on you 😌","Okay, Mysore is basically the whole page now","Just tap Mysore, Kunnath 💖"];
+$('tvm').addEventListener('click',function(){
+  tv++;$('pm').style.setProperty('--s',Math.min(2.4,1+tv*.4));
+  $('pt').style.setProperty('--s',Math.max(.4,1-tv*.2));
+  $('h2').textContent=tm[Math.min(tv-1,tm.length-1)]});
+$('mys').addEventListener('click',function(){
+  $('pal').innerHTML=palace(true);document.body.classList.add('night');go('p3')});
+</script>
+</body>
+</html>
